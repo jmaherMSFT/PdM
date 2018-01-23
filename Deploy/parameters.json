@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_name": {
+            "value": null
+        },
+        "sites_jobhost_name": {
+            "value": null
+        },
+        "namespaces_name": {
+            "value": null
+        },
+        "IotHubs_0d38d_name": {
+            "value": null
+        },
+        "serverfarms_plan_name": {
+            "value": null
+        },
+        "config_web_name": {
+            "value": null
+        },
+        "storageAccounts_name": {
+            "value": null
+        },
+        "serverfarms_jobsplan_name": {
+            "value": null
+        },
+        "storageAccounts_ml_name": {
+            "value": null
+        },
+        "Workspaces_name": {
+            "value": null
+        },
+        "config_web_name_1": {
+            "value": null
+        },
+        "eventhubs_ehdata_name": {
+            "value": null
+        },
+        "hostNameBindings.azurewebsites.net_name": {
+            "value": null
+        },
+        "AuthorizationRules_RootManageSharedAccessKey_name": {
+            "value": null
+        },
+        "consumergroups_$Default_name": {
+            "value": null
+        },
+        "hostNameBindings_jobhost.azurewebsites.net_name": {
+            "value": null
+        },
+        "streamAnalyticsJobName": {
+            "value": null
+        },
+        "numberOfStreamingUnits": {
+            "value": null
+        }
+    }
