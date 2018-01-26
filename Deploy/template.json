@@ -3,23 +3,23 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_name": {
-            "defaultValue": "placeholder",
+            "defaultValue": "solution-name",
             "type": "String"
         },
         "sites_jobhost_name": {
-            "defaultValue": "placeholder-jobhost",
+            "defaultValue": "solution-name-jobhost",
             "type": "String"
         },
         "namespaces_name": {
-            "defaultValue": "placeholder",
+            "defaultValue": "solution-name",
             "type": "String"
         },
-        "IotHubs_placeholder0d38d_name": {
-            "defaultValue": "placeholder0d38d",
+        "IotHubs_name": {
+            "defaultValue": "solution-name",
             "type": "String"
         },
         "serverfarms_plan_name": {
-            "defaultValue": "placeholder-plan",
+            "defaultValue": "solution-name-plan",
             "type": "String"
         },
         "config_web_name": {
@@ -27,19 +27,19 @@
             "type": "String"
         },
         "storageAccounts_name": {
-            "defaultValue": "placeholder",
+            "defaultValue": "solution-name",
             "type": "String"
         },
         "serverfarms_jobsplan_name": {
-            "defaultValue": "placeholder-jobsplan",
+            "defaultValue": "solution-name-jobsplan",
             "type": "String"
         },
-        "storageAccounts_mlplaceholder_name": {
-            "defaultValue": "mlplaceholder",
+        "storageAccounts_mlsolution-name_name": {
+            "defaultValue": "mlsolution-name",
             "type": "String"
         },
         "Workspaces_name": {
-            "defaultValue": "placeholder",
+            "defaultValue": "solution-name",
             "type": "String"
         },
         "config_web_name_1": {
@@ -47,11 +47,11 @@
             "type": "String"
         },
         "eventhubs_ehdata_name": {
-            "defaultValue": "placeholder-ehdata",
+            "defaultValue": "solution-name-ehdata",
             "type": "String"
         },
         "hostNameBindings.azurewebsites.net_name": {
-            "defaultValue": "placeholder.azurewebsites.net",
+            "defaultValue": "solution-name.azurewebsites.net",
             "type": "String"
         },
         "AuthorizationRules_RootManageSharedAccessKey_name": {
@@ -63,11 +63,15 @@
             "type": "String"
         },
         "hostNameBindings_jobhost.azurewebsites.net_name": {
-            "defaultValue": "placeholder-jobhost.azurewebsites.net",
+            "defaultValue": "solution-name-jobhost.azurewebsites.net",
             "type": "String"
         },
         "streamAnalyticsJobName": {
-            "defaultValue": "placeholder-Telemetry",
+            "defaultValue": "solution-name-Telemetry",
+            "type": "String"
+        },
+        "machineLearningLocation": {
+            "defaultValue": "southcentral",
             "type": "String"
         },
         "numberOfStreamingUnits": {
@@ -92,7 +96,9 @@
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "iotHubEndpoint": "[concat('sb://iothub-ns-', parameters('IotHubs_name'), '-', resourceGroup().location, '.servicebus.windows.net/')]"  
+    },
     "resources": [
         {
             "type": "Microsoft.Devices/IotHubs",
@@ -101,9 +107,9 @@
                 "tier": "Standard",
                 "capacity": 1
             },
-            "name": "[parameters('IotHubs_placeholder0d38d_name')]",
+            "name": "[parameters('IotHubs_name')]",
             "apiVersion": "2016-02-03",
-            "location": "westus",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -131,8 +137,8 @@
                             "2",
                             "3"
                         ],
-                        "path": "[parameters('IotHubs_placeholder0d38d_name')]",
-                        "endpoint": "sb://iothub-ns-ercpdmwest-308892-4ba7df4510.servicebus.windows.net/"
+                        "path": "[parameters('IotHubs_name')]",
+                        "endpoint":  "[variables('iotHubEndpoint')]"
                     },
                     "operationsMonitoringEvents": {
                         "retentionTimeInDays": 1,
@@ -143,8 +149,8 @@
                             "2",
                             "3"
                         ],
-                        "path": "[concat(parameters('IotHubs_placeholder0d38d_name'),'-operationmonitoring')]",
-                        "endpoint": "sb://iothub-ns-ercpdmwest-308892-4ba7df4510.servicebus.windows.net/"
+                        "path": "[concat(parameters('IotHubs_name'),'-operationmonitoring')]",
+                        "endpoint": "[variables('iotHubEndpoint')]"
                     }
                 },
                 "routing": {
@@ -194,7 +200,7 @@
             },
             "name": "[parameters('namespaces_name')]",
             "apiVersion": "2017-04-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "iotSuiteType": "PredictiveMaintenance"
             },
@@ -203,7 +209,7 @@
                 "isAutoInflateEnabled": false,
                 "maximumThroughputUnits": 0,
                 "provisioningState": "Succeeded",
-                "metricId": "[concat('bf7adf12-c3a8-426c-9976-29f145eba70f:', parameters('namespaces_name'))]",
+                "metricId": "[concat(subscription().subscriptionId, ':', parameters('namespaces_name'))]",
                 "createdAt": "2018-01-04T17:34:56.747Z",
                 "updatedAt": "2018-01-04T17:35:22.037Z",
                 "serviceBusEndpoint": "[concat('https://', parameters('namespaces_name'),'.servicebus.windows.net:443/')]"
@@ -214,16 +220,16 @@
             "type": "Microsoft.MachineLearning/Workspaces",
             "name": "[parameters('Workspaces_name')]",
             "apiVersion": "2016-04-01",
-            "location": "South Central US",
+            "location": "[parameters('machineLearningLocation')]",
             "tags": {},
             "scale": null,
             "properties": {
-                "userStorageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_mlplaceholder_name'))]",
+                "userStorageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_mlsolution-name_name'))]",
                 "keyVaultIdentifierId": null,
                 "ownerEmail": "ercenk@microsoft.com"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_mlplaceholder_name'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_mlsolution-name_name'))]"
             ]
         },
         {
@@ -235,7 +241,7 @@
             "kind": "Storage",
             "name": "[parameters('storageAccounts_name')]",
             "apiVersion": "2017-06-01",
-            "location": "westus",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -269,9 +275,9 @@
                 "tier": "Standard"
             },
             "kind": "Storage",
-            "name": "[parameters('storageAccounts_mlplaceholder_name')]",
+            "name": "[parameters('storageAccounts_mlsolution-name_name')]",
             "apiVersion": "2017-06-01",
-            "location": "southcentralus",
+            "location": "[parameters('machineLearningLocation')]",
             "tags": {},
             "scale": null,
             "properties": {
@@ -308,7 +314,7 @@
             "kind": "app",
             "name": "[parameters('serverfarms_jobsplan_name')]",
             "apiVersion": "2016-09-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -337,7 +343,7 @@
             "kind": "app",
             "name": "[parameters('serverfarms_plan_name')]",
             "apiVersion": "2016-09-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -359,7 +365,7 @@
             "kind": "app",
             "name": "[parameters('sites_jobhost_name')]",
             "apiVersion": "2016-08-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -368,7 +374,7 @@
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_jobhost_name'),'placeholder-jobhost.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_jobhost_name'),'solution-name-jobhost.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -376,7 +382,7 @@
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_jobhost_name'),'placeholder-jobhost.scm.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_jobhost_name'),'solution-name-jobhost.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -405,7 +411,7 @@
             "kind": "app",
             "name": "[parameters('sites_name')]",
             "apiVersion": "2016-08-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -414,7 +420,7 @@
                 "enabled": true,
                 "hostNameSslStates": [
                     {
-                        "name": "[concat(parameters('sites_name'),'placeholder.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_name'),'solution-name.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -422,7 +428,7 @@
                         "hostType": "Standard"
                     },
                     {
-                        "name": "[concat(parameters('sites_name'),'placeholder.scm.azurewebsites.net')]",
+                        "name": "[concat(parameters('sites_name'),'solution-name.scm.azurewebsites.net')]",
                         "sslState": "Disabled",
                         "virtualIP": null,
                         "thumbprint": null,
@@ -450,7 +456,7 @@
             "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
             "name": "[concat(parameters('namespaces_name'), '/', parameters('AuthorizationRules_RootManageSharedAccessKey_name'))]",
             "apiVersion": "2017-04-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
                 "rights": [
@@ -467,7 +473,7 @@
             "type": "Microsoft.EventHub/namespaces/eventhubs",
             "name": "[concat(parameters('namespaces_name'), '/', parameters('eventhubs_ehdata_name'))]",
             "apiVersion": "2017-04-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
                 "messageRetentionInDays": 1,
@@ -490,7 +496,7 @@
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
             "name": "[concat(parameters('namespaces_name'), '/', parameters('eventhubs_ehdata_name'), '/', parameters('consumergroups_$Default_name'))]",
             "apiVersion": "2017-04-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
                 "createdAt": "2018-01-04T17:35:36.6748783",
@@ -505,7 +511,7 @@
             "type": "Microsoft.Web/sites/config",
             "name": "[concat(parameters('sites_jobhost_name'), '/', parameters('config_web_name_1'))]",
             "apiVersion": "2016-08-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -534,7 +540,7 @@
                 "httpLoggingEnabled": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$placeholder-jobhost",
+                "publishingUsername": "$solution-name-jobhost",
                 "publishingPassword": null,
                 "appSettings": null,
                 "metadata": null,
@@ -616,10 +622,10 @@
             "type": "Microsoft.Web/sites/hostNameBindings",
             "name": "[concat(parameters('sites_jobhost_name'), '/', parameters('hostNameBindings_jobhost.azurewebsites.net_name'))]",
             "apiVersion": "2016-08-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
-                "siteName": "placeholder-jobhost",
+                "siteName": "solution-name-jobhost",
                 "domainId": null,
                 "hostNameType": "Verified"
             },
@@ -631,7 +637,7 @@
             "type": "Microsoft.Web/sites/config",
             "name": "[concat(parameters('sites_name'), '/', parameters('config_web_name'))]",
             "apiVersion": "2016-08-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "tags": {
                 "IotSuiteType": "PredictiveMaintenance"
             },
@@ -660,7 +666,7 @@
                 "httpLoggingEnabled": false,
                 "logsDirectorySizeLimit": 35,
                 "detailedErrorLoggingEnabled": false,
-                "publishingUsername": "$placeholder",
+                "publishingUsername": "$solution-name",
                 "publishingPassword": null,
                 "appSettings": null,
                 "metadata": null,
@@ -742,10 +748,10 @@
             "type": "Microsoft.Web/sites/hostNameBindings",
             "name": "[concat(parameters('sites_name'), '/', parameters('hostNameBindings.azurewebsites.net_name'))]",
             "apiVersion": "2016-08-01",
-            "location": "West US",
+            "location": "[resourceGroup().location]",
             "scale": null,
             "properties": {
-                "siteName": "placeholder",
+                "siteName": "solution-name",
                 "domainId": null,
                 "hostNameType": "Verified"
             },

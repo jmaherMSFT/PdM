@@ -53,6 +53,9 @@
         "streamAnalyticsJobName": {
             "value": null
         },
+        "machineLearningLocation": {
+            "value": null
+        },
         "numberOfStreamingUnits": {
             "value": null
         }
