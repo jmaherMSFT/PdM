@@ -20,9 +20,9 @@ and register the missing resource provider, in my case, it was microsoft.machine
  Our goal is not to get you through all of the steps before, and deploy a solution using the AzureIoTSuite.com interface but give you a starting point for deploying the Azure IoT PdM solution using ARM templates.
  
  ## Deploying to Azure Directly
- <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FErcenk%2FPdM%2Fmaster%2FDeploy%2Ftemplate.json" target="_blank">
+ <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMSIndustryExperiences%2FPdM%2FErcenk%2FDeploy%2Ftemplate.json" target="_blank">
   <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
-<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FErcenk%2FPdM%2Fmaster%2FDeploy%2Ftemplate.json" target="_blank">
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FMSIndustryExperiences%2FPdM%2FErcenk%2FDeploy%2Ftemplate.json" target="_blank">
   <img src="http://armviz.io/visualizebutton.png"/>
 </a>
