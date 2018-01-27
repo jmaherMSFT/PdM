@@ -71,7 +71,7 @@
             "type": "String"
         },
         "machineLearningLocation": {
-            "defaultValue": "southcentral",
+            "defaultValue": "southcentralus",
             "type": "String"
         },
         "numberOfStreamingUnits": {
