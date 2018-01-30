@@ -54,4 +54,4 @@ You can deploy the templates using multiple ways.
 
   <a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FMSIndustryExperiences%2FPdM%2FErcenk%2FDeploy%2Ftemplate.json" target="_blank">
     <img src="http://armviz.io/visualizebutton.png"/>
-  </a>
+  </a>s
